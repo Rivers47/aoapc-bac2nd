@@ -18,7 +18,7 @@ LL gcd(LL a, LL b) {
 
 // 返回满足1/c <= a/b的最小c
 inline int get_first(LL a, LL b) {
-  return b/a+1;
+  return (b / a) + 1;
 }
 
 const int maxn = 100 + 5;
