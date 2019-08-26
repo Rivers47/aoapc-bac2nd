@@ -9,17 +9,19 @@
 using namespace std;
 
 const int maxs = 20;
-const int maxn = 150; // 75% cells plus 2 fake nodes
+const int maxn = 150; // 75% cells plus 2 fake nodes 14*14*0.75=147
 const int dx[]={1,-1,0,0,0}; // 4 moves, plus "no move"
 const int dy[]={0,0,1,-1,0};
 
 inline int ID(int a, int b, int c) {
-  return (a<<16)|(b<<8)|c;
+  return (a<<16)|(b<<8)|c;  //since each int has at most 8 bits
 }
 
 int s[3], t[3]; // starting/ending position of each ghost
 
-int deg[maxn], G[maxn][5]; // target cells for each move (including "no move")
+
+int deg[maxn]; //  degree? number of aviable directions
+int G[maxn][5]; // target cells for each move (including "no move")
 
 inline bool conflict(int a, int b, int a2, int b2) {
   return a2 == b2 || (a2 == b && b2 == a);
@@ -86,7 +88,8 @@ int main() {
     }
 
     // add fakes nodes so that in each case we have 3 ghosts. this makes the code shorter
-    if(n <= 2) { deg[cnt] = 1; G[cnt][0] = cnt; s[2] = t[2] = cnt++; }
+    // the additional ghost(s) stay in a fake cell that "connects" to itself, and is already at the target position
+    if(n <= 2) { deg[cnt] = 1; G[cnt][0] = cnt; s[2] = t[2] = cnt++; }  
     if(n <= 1) { deg[cnt] = 1; G[cnt][0] = cnt; s[1] = t[1] = cnt++; }
 
     printf("%d\n", bfs());
